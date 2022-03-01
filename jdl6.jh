@@ -1,0 +1,107 @@
+
+
+entity CadastroUser {
+	nome String
+    telefone String
+    tipo String
+	pais String,
+	estado String
+    cidade String
+    cep Integer
+    logradouro String
+    numero Integer
+    complemento String
+}
+
+entity Item {
+	descricao String
+    imagem ImageBlob
+    categoriaItem CategoriaItem
+    unidadeMedida UnidadeMedida
+}
+
+entity CadastroDoacao {
+	anonimidade Boolean,
+    realizaEntrega Boolean,
+	dataDoacao LocalDate,
+	logradouro String,
+    numero Integer,
+    bairro String,
+    cidade String,
+    cep String,
+    estado String,
+    pais String,
+    complemento String
+   
+}
+entity Solicitacao {
+	solicitante String,
+	anonimidade Boolean,
+	dataSolicitacao Instant,
+    enderecoEntrega String,
+    localDeEntrega String,
+    dataAprovacao LocalDate,
+    aprovado Boolean,
+    ativa Boolean
+}
+entity Acao {
+	dataCriacao Instant,
+	usuarioCriacaoAcao String,
+	pendente Boolean,
+    dataExecucaoAcao LocalDate,
+    ativa Boolean,
+    observacoes String
+   
+}
+enum UnidadeMedida {
+	CARTELA, CENTO, CENTIMETRO,
+    CAIXA, DUZIA, EMBALAGEM, 
+	QUILOGRAMA, KIT, LITRO,
+    METRO, METRO_CUBICO, PECA,
+    TONELADA, UNIDADE, VALOR
+}
+
+enum CategoriaItem {
+	ALIMENTO, ACESSIBILIDADE, ELETRODOMESTICO, FERRAMENTAS,
+    HIGIENE, INFANTIL, INFORMATICA, LIMPEZA, LIVROS, MONETARIO,
+    MOVEIS, PAPELARIA, SAUDE, UTILITARIO, VESTUARIO
+}
+
+	relationship OneToOne {
+	CadastroUser{user} to User
+    
+	}
+
+	relationship OneToOne{
+    Acao to CadastroDoacao
+    }
+    
+    relationship OneToOne{
+    Acao to Solicitacao
+    }
+    
+      relationship OneToOne{
+    Acao to CadastroUser
+    }
+    
+    
+    
+    relationship ManyToOne{
+	CadastroDoacao{nome} to CadastroUser
+}
+
+
+    
+      relationship ManyToOne{
+	CadastroDoacao{descricao} to Item
+}
+
+    relationship ManyToOne{
+	Solicitacao{nome} to CadastroUser
+}
+
+
+    
+      relationship ManyToOne{
+	Solicitacao{descricao} to Item
+}
