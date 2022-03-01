@@ -17,9 +17,6 @@ public class CadastroUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "nome")
@@ -53,6 +50,7 @@ public class CadastroUser implements Serializable {
     private String complemento;
 
     @OneToOne
+    @MapsId
     @JoinColumn(unique = true)
     private User user;
 

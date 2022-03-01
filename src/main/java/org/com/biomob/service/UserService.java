@@ -6,8 +6,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.com.biomob.config.Constants;
 import org.com.biomob.domain.Authority;
+import org.com.biomob.domain.CadastroUser;
 import org.com.biomob.domain.User;
 import org.com.biomob.repository.AuthorityRepository;
+import org.com.biomob.repository.CadastroUserRepository;
 import org.com.biomob.repository.UserRepository;
 import org.com.biomob.security.AuthoritiesConstants;
 import org.com.biomob.security.SecurityUtils;
@@ -37,6 +39,8 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final CadastroUserRepository cadastroUserRepository;
+
     private final AuthorityRepository authorityRepository;
 
     private final CacheManager cacheManager;
@@ -45,12 +49,14 @@ public class UserService {
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,
-        CacheManager cacheManager
+        CacheManager cacheManager,
+        CadastroUserRepository cadastroUserRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.cadastroUserRepository = cadastroUserRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -93,7 +99,20 @@ public class UserService {
             });
     }
 
-    public User registerUser(AdminUserDTO userDTO, String password) {
+    public User registerUser(
+        AdminUserDTO userDTO,
+        String password,
+        String nome,
+        String tipo,
+        String telefone,
+        String pais,
+        String estado,
+        String cidade,
+        Integer cep,
+        String logradouro,
+        Integer numero,
+        String complemento
+    ) {
         userRepository
             .findOneByLogin(userDTO.getLogin().toLowerCase())
             .ifPresent(existingUser -> {
@@ -132,6 +151,22 @@ public class UserService {
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
+
+        // Create and save the CadastroUser entity
+        CadastroUser newCadastroUser = new CadastroUser();
+        newCadastroUser.setUser(newUser);
+        newCadastroUser.setTelefone(telefone);
+        newCadastroUser.setTipo(tipo);
+        newCadastroUser.setPais(pais);
+        newCadastroUser.setEstado(estado);
+        newCadastroUser.setCidade(cidade);
+        newCadastroUser.setCep(cep);
+        newCadastroUser.setLogradouro(logradouro);
+        newCadastroUser.setNumero(numero);
+        newCadastroUser.setComplemento(complemento);
+        cadastroUserRepository.save(newCadastroUser);
+        log.debug("Created Information for CadastroUser: {}", newCadastroUser);
+
         return newUser;
     }
 

@@ -37,7 +37,7 @@ export const RegisterPage = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h1 id="register-title" data-cy="registerTitle">
-            Registration
+            Registro
           </h1>
         </Col>
       </Row>
@@ -46,73 +46,155 @@ export const RegisterPage = () => {
           <ValidatedForm id="register-form" onSubmit={handleValidSubmit}>
             <ValidatedField
               name="username"
-              label="Username"
-              placeholder={'Your username'}
+              label="Usuário"
+              placeholder={'Seu nome de usuário'}
               validate={{
-                required: { value: true, message: 'Your username is required.' },
+                required: { value: true, message: 'Seu nome de usuário é obrigatório.' },
                 pattern: {
                   value: /^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$/,
-                  message: 'Your username is invalid.',
+                  message: 'Seu usuário é inválido.',
                 },
-                minLength: { value: 1, message: 'Your username is required to be at least 1 character.' },
-                maxLength: { value: 50, message: 'Your username cannot be longer than 50 characters.' },
+                minLength: { value: 1, message: 'É obrigatório ter pelo menos 1 caractere.' },
+                maxLength: { value: 50, message: 'Não é permitido mais que 50 caracteres.' },
               }}
               data-cy="username"
             />
             <ValidatedField
               name="email"
               label="Email"
-              placeholder={'Your email'}
+              placeholder={'Seu email'}
               type="email"
               validate={{
-                required: { value: true, message: 'Your email is required.' },
-                minLength: { value: 5, message: 'Your email is required to be at least 5 characters.' },
-                maxLength: { value: 254, message: 'Your email cannot be longer than 50 characters.' },
-                validate: v => isEmail(v) || 'Your email is invalid.',
+                required: { value: true, message: 'Seu email é obrigatório.' },
+                minLength: { value: 5, message: 'É obrigatório ter pelo menos 1 caractere.' },
+                maxLength: { value: 254, message: 'Não é permitido mais que 50 caracteres.' },
+                validate: v => isEmail(v) || 'Seu email é inválido.',
               }}
               data-cy="email"
             />
             <ValidatedField
               name="firstPassword"
-              label="New password"
-              placeholder={'New password'}
+              label="Senha"
+              placeholder={'Insira sua senha'}
               type="password"
               onChange={updatePassword}
               validate={{
-                required: { value: true, message: 'Your password is required.' },
-                minLength: { value: 4, message: 'Your password is required to be at least 4 characters.' },
-                maxLength: { value: 50, message: 'Your password cannot be longer than 50 characters.' },
+                required: { value: true, message: 'Sua senha é obrigatória.' },
+                minLength: { value: 4, message: 'É obrigatório ter pelo menos 1 caractere.' },
+                maxLength: { value: 50, message: 'Não é permitido mais que 50 caracteres.' },
               }}
               data-cy="firstPassword"
             />
             <PasswordStrengthBar password={password} />
             <ValidatedField
               name="secondPassword"
-              label="New password confirmation"
-              placeholder="Confirm the new password"
+              label="Confirme a senha"
+              placeholder="Confirme sua senha"
               type="password"
               validate={{
-                required: { value: true, message: 'Your confirmation password is required.' },
-                minLength: { value: 4, message: 'Your confirmation password is required to be at least 4 characters.' },
-                maxLength: { value: 50, message: 'Your confirmation password cannot be longer than 50 characters.' },
-                validate: v => v === password || 'The password and its confirmation do not match!',
+                required: { value: true, message: 'Sua senha de confirmação é obrigatória.' },
+                minLength: { value: 4, message: 'É obrigatório ter pelo menos 1 caractere.' },
+                maxLength: { value: 50, message: 'Não é permitido mais que 50 caracteres.' },
+                validate: v => v === password || 'As senhas não são iguais!',
               }}
               data-cy="secondPassword"
             />
+
+            <ValidatedField
+              name="nome"
+              label="Nome"
+              placeholder={'Seu nome'}
+              validate={{
+                minLength: { value: 2, message: 'É obrigatório ter pelo menos 2 caractere.' },
+                maxLength: { value: 75, message: 'Não é permitido mais que 75 caracteres.' },
+              }}
+              data-cy="nome"
+            />
+            <ValidatedField
+              name="telefone"
+              label="Telefone"
+              placeholder={'Informe seu telefone com DDD'}
+              validate={{
+                minLength: { value: 6, message: 'É obrigatório ter pelo menos 6 caractere.' },
+                maxLength: { value: 20, message: 'Não é permitido mais que 20 caracteres.' },
+              }}
+              data-cy="telefone"
+            />
+            <ValidatedField
+              name="tipo"
+              label="Tipo"
+              placeholder={'Tipo de pessoa Ex: ONG, Pessoa física, etc'}
+              validate={{
+                minLength: { value: 2, message: 'É obrigatório ter pelo menos 2 caractere.' },
+                maxLength: { value: 30, message: 'Não é permitido mais que 30 caracteres.' },
+              }}
+              data-cy="tipo"
+            />
+            <ValidatedField
+              name="pais"
+              label="País"
+              placeholder={'Seu País'}
+              validate={{
+                minLength: { value: 2, message: 'É obrigatório ter pelo menos 2 caractere.' },
+                maxLength: { value: 35, message: 'Não é permitido mais que 35 caracteres.' },
+              }}
+              data-cy="pais"
+            />
+            <ValidatedField
+              name="estado"
+              label="Estado"
+              placeholder={'Seu Estado'}
+              validate={{
+                minLength: { value: 2, message: 'É obrigatório ter pelo menos 2 caractere.' },
+                maxLength: { value: 30, message: 'Não é permitido mais que 30 caracteres.' },
+              }}
+              data-cy="estado"
+            />
+            <ValidatedField
+              name="cidade"
+              label="Cidade"
+              placeholder={'Sua cidade'}
+              validate={{
+                minLength: { value: 1, message: 'É obrigatório ter pelo menos 1 caractere.' },
+                maxLength: { value: 30, message: 'Não é permitido mais que 30 caracteres.' },
+              }}
+              data-cy="cidade"
+            />
+            <ValidatedField
+              name="logradouro"
+              label="Logradouro"
+              placeholder={'Sua rua'}
+              validate={{
+                minLength: { value: 3, message: 'É obrigatório ter pelo menos 3 caractere.' },
+                maxLength: { value: 50, message: 'Não é permitido mais que 50 caracteres.' },
+              }}
+              data-cy="logradouro"
+            />
+            <ValidatedField
+              name="numero"
+              label="Número"
+              placeholder={'Infome o número de sua residência'}
+              validate={{
+                minLength: { value: 1, message: 'É obrigatório ter pelo menos 1 caractere.' },
+                maxLength: { value: 6, message: 'Não é permitido mais que 6 caracteres.' },
+              }}
+              data-cy="numero"
+            />
+            <ValidatedField
+              name="complemento"
+              label="Complemento"
+              placeholder={'Ex: Muro azul, apt 5'}
+              validate={{
+                minLength: { value: 2, message: 'É obrigatório ter pelo menos 2 caractere.' },
+                maxLength: { value: 50, message: 'Não é permitido mais que 50 caracteres.' },
+              }}
+              data-cy="complemento"
+            />
             <Button id="register-submit" color="primary" type="submit" data-cy="submit">
-              Register
+              Registrar
             </Button>
           </ValidatedForm>
           <p>&nbsp;</p>
-          <Alert color="warning">
-            <span>If you want to</span>
-            <a className="alert-link"> sign in</a>
-            <span>
-              , you can try the default accounts:
-              <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-              <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
-            </span>
-          </Alert>
         </Col>
       </Row>
     </div>
